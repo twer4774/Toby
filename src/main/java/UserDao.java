@@ -5,7 +5,7 @@ import java.sql.*;
 /**
  * Created by TempSW on 2016. 4. 29..
  */
-public class UserDao {
+public abstract class UserDao {
     public void add(User user) throws ClassNotFoundException, SQLException {
         Connection connection = getConnection();
 
@@ -40,30 +40,7 @@ public class UserDao {
         return user;
     }
 
-    private Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/toby", "swTemp", "password123");
-        return connection;
-    }
+    public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
 
-    public static void main(String[] arg) throws SQLException, ClassNotFoundException {
-        UserDao userDao = new UserDao();
-
-        User user = new User();
-        user.setId("whiteship1");
-        user.setName("백기선");
-        user.setPassword("married");
-
-        userDao.add(user);
-
-        System.out.println(user.getId() + "등록성공");
-
-        User user2 = userDao.get(user.getId());
-        System.out.println(user2.getName());
-        System.out.println(user2.getPassword());
-
-        System.out.println(user2.getId() + "조회성공");
-
-    }
 
 }
